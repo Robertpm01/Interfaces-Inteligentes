@@ -1,0 +1,96 @@
+# README: Interacción entre el Cubo, Arañas y Huevos
+
+## Descripción del Ejercicio
+
+En esta adaptación de la escena anterior, se crean interacciones entre un cubo, arañas de diferentes tipos y huevos de dos tipos. Las mecánicas principales son:
+
+1. **Cubo**:
+   - Colisiona con arañas de tipo 1 o tipo 2 para desencadenar diferentes comportamientos.
+
+2. **Arañas de Tipo 1**:
+   - Cuando el cubo colisiona con una araña de tipo 2, las arañas de tipo 1 se acercan a un objeto seleccionado.
+   - Cuando el cubo colisiona con una araña de tipo 1, estas se dirigen hacia los huevos de tipo 2.
+
+3. **Huevos de Tipo 2**:
+   - Si una araña de tipo 1 colisiona con un huevo de tipo 2, la araña debe cambiar de color.
+
+---
+
+## Implementación
+
+### 1. Configuración de la Escena
+
+#### **Cubo**
+- **Componentes**:
+  - `Rigidbody` configurado como cinemático.
+  - `Collider` para detectar colisiones.
+- **Script**:
+  - `CuboController`: Maneja las colisiones con las arañas y emite eventos para cambiar el comportamiento de las arañas.
+
+#### **Arañas de Tipo 1**
+- **Tag**: `tipo1`
+- **Componentes**:
+  - `Rigidbody` cinemático.
+  - `Collider` para detectar colisiones.
+- **Script**:
+  - `AranaTipo1Controller`: Escucha eventos del cubo para acercarse a un objeto o dirigirse a los huevos de tipo 2.
+
+#### **Huevos de Tipo 2**
+- **Tag**: `huevo_tipo2`
+- **Componentes**:
+  - `Rigidbody` cinemático.
+  - `Collider` para detectar colisiones con las arañas.
+- **Script**:
+  - No necesita lógica específica, pero es importante que sean detectables por las arañas.
+
+---
+
+### 2. Lógica de los Scripts
+
+#### **CuboController**
+- Detecta colisiones con arañas tipo 1 o tipo 2.
+- Emite eventos:
+  - **Evento 1**: Cuando colisiona con arañas tipo 2, notifica a las arañas tipo 1 para acercarse a un objeto.
+  - **Evento 2**: Cuando colisiona con arañas tipo 1, notifica a las arañas para dirigirse a los huevos tipo 2.
+
+#### **AranaTipo1Controller**
+- Escucha los eventos del cubo:
+  - Se acerca al objeto seleccionado cuando el cubo colisiona con una araña tipo 2.
+  - Se dirige hacia los huevos tipo 2 cuando el cubo colisiona con una araña tipo 1.
+- Cambia de color si colisiona con un huevo tipo 2.
+
+#### **Huevos de Tipo 2**
+- Detectan colisiones con las arañas tipo 1 y pueden cambiar su color si es necesario.
+
+---
+
+### 3. Flujo de Ejecución
+
+1. **Cubo colisiona con una araña tipo 2**:
+   - Las arañas tipo 1 reciben un evento y se mueven hacia un objeto seleccionado.
+
+2. **Cubo colisiona con una araña tipo 1**:
+   - Las arañas tipo 1 reciben un evento y se mueven hacia los huevos tipo 2.
+
+3. **Araña tipo 1 colisiona con un huevo tipo 2**:
+   - La araña cambia de color para indicar la colisión.
+
+---
+
+### 4. Configuración en Unity
+
+1. **Configura los Objetos**:
+   - Asigna los `Tags` (`tipo1`, `tipo2`, `huevo_tipo2`) correctamente.
+   - Asegúrate de que todos los componentes requeridos (`Rigidbody`, `Collider`) están configurados.
+
+2. **Asigna los Scripts**:
+   - Asigna `CuboController` al cubo.
+   - Asigna `AranaTipo1Controller` a las arañas correspondientes.
+
+3. **Asegúrate de los Eventos**:
+   - Verifica que los eventos se emiten correctamente y que las arañas reaccionan según lo esperado.
+
+4. **Prueba la Escena**:
+   - Mueve el cubo hacia las arañas y huevos para observar las interacciones.
+
+![ejercicio 3](ejercicio3.gif)

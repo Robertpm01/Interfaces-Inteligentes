@@ -2,8 +2,14 @@ using UnityEngine;
 
 public class EsferaTipo2Controller : MonoBehaviour
 {
-    public float velocidad = 5f;
-    private Transform cilindroObjetivo;
+    public float velocidad = 5f; // Velocidad de movimiento
+    private Transform cilindroObjetivo; // Referencia al cilindro objetivo
+    private Rigidbody rb; // Referencia al Rigidbody
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>(); // Asignar el Rigidbody al iniciar
+    }
 
     private void OnEnable()
     {
@@ -13,13 +19,13 @@ public class EsferaTipo2Controller : MonoBehaviour
 
     private void OnDisable()
     {
-        // Desuscribirse cuando se destruye el objeto o se desactiva
+        // Desuscribirse cuando se desactiva o destruye
         CylinderController.OnCuboCollision -= MoverHaciaCilindro;
     }
 
     private void MoverHaciaCilindro(Transform cilindro)
     {
-        // Establecer el cilindro como el objetivo
+        // Establecer el cilindro objetivo como el cilindro que colisionó
         cilindroObjetivo = cilindro;
     }
 
@@ -29,7 +35,8 @@ public class EsferaTipo2Controller : MonoBehaviour
         {
             // Mover la esfera tipo 2 hacia el cilindro objetivo
             Vector3 direccion = (cilindroObjetivo.position - transform.position).normalized;
-            transform.position += direccion * velocidad * Time.deltaTime;
+            Vector3 nuevaPosicion = rb.position + direccion * velocidad * Time.deltaTime;
+            rb.MovePosition(nuevaPosicion);
         }
     }
 }

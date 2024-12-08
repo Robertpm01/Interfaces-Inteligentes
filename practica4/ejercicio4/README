@@ -1,0 +1,113 @@
+# README: Interacción entre el Cubo y las Arañas
+
+## Descripción del Ejercicio
+
+En este ejercicio, se simula una interacción en Unity donde:
+
+1. **Cubo**:
+   - Detecta cuando se aproxima a un objeto de referencia en la escena.
+
+2. **Arañas del Grupo 1**:
+   - Al aproximarse el cubo al objeto de referencia, estas arañas se teletransportan a un huevo objetivo predefinido.
+
+3. **Arañas del Grupo 2**:
+   - Al aproximarse el cubo al objeto de referencia, estas arañas se orientan hacia un objeto específico en la escena.
+
+---
+
+## Pasos para Implementar
+
+### 1. Configuración de Objetos en la Escena
+
+#### **Cubo**
+- **Componentes**:
+  - `Collider` (`BoxCollider`).
+  - `Rigidbody`.
+- **Script**:
+  - `CuboController2`: Detecta la proximidad con el objeto de referencia y emite eventos.
+
+#### **Arañas del Grupo 1**
+- **Tag**: `SpiderType1`
+- **Componentes**:
+  - `Rigidbody` y `Collider`.
+- **Script**:
+  - `AranaGrupo1Controller3`: Escucha el evento y teletransporta las arañas a los huevos objetivo.
+
+#### **Arañas del Grupo 2**
+- **Tag**: `SpiderType2`
+- **Componentes**:
+  - `Rigidbody` y `Collider`.
+- **Script**:
+  - `AranaGrupo2Controller3`: Escucha el evento y orienta las arañas hacia el objeto designado.
+
+#### **Huevos del grupo 1**
+- **Tag**: `EggType1`
+- **Componentes**:
+  - `Collider` y `Rigidbody`.
+
+#### **Huevos del grupo 2**
+- **Tag**: `EggType2`
+- **Componentes**:
+  - `Collider` y `Rigidbody`.
+
+---
+
+### 2. Lógica de los Scripts
+
+#### **CuboController**
+- Detecta la proximidad entre el cubo y el objeto de referencia usando `Vector3.Distance`.
+- Emite dos eventos:
+  - **Evento 1**: Notifica a las arañas del grupo 1 para teletransportarse.
+  - **Evento 2**: Notifica a las arañas del grupo 2 para orientarse.
+
+#### **AranaGrupo1Controller**
+- Escucha el evento del cubo y teletransporta las arañas al huevo objetivo mediante `Rigidbody.position`.
+
+#### **AranaGrupo2Controller**
+- Escucha el evento del cubo y calcula la rotación hacia el objeto objetivo con `Quaternion.LookRotation`.
+- Suaviza la rotación usando `Rigidbody.MoveRotation`.
+
+---
+
+### 3. Flujo de Ejecución
+
+1. **Cubo se aproxima al objeto de referencia**:
+   - Calcula la distancia entre el cubo y el objeto de referencia.
+   - Si la distancia es menor que un valor predefinido, se activan los eventos.
+
+2. **Arañas del Grupo 1**:
+   - Teletransportadas a los huevos objetivo.
+
+3. **Arañas del Grupo 2**:
+   - Orientadas hacia el objeto designado.
+
+---
+
+### 4. Configuración en Unity
+
+1. **Configura los Objetos**:
+   - Asigna correctamente los `Tags` (`SpiderType1`, `SpiderType2`, `EggTarget`).
+   - Arrastra y suelta los objetos necesarios en los campos públicos de los scripts en el Inspector.
+
+2. **Verifica los Eventos**:
+   - Asegúrate de que las arañas están suscritas correctamente a los eventos emitidos por el cubo.
+
+3. **Prueba la Escena**:
+   - Ejecuta la escena y mueve el cubo hacia el objeto de referencia para observar las interacciones.
+
+---
+
+## Notas
+
+- **Ajuste del Umbral de Distancia**:
+  - Configura el valor de proximidad para lograr un comportamiento natural.
+
+- **Componentes de Física**:
+  - Verifica que los `Rigidbody` están configurados correctamente para evitar problemas.
+
+- **Depuración**:
+  - Usa `Debug.Log` en los eventos para confirmar que se ejecutan correctamente.
+
+Con estos pasos, lograrás una interacción fluida y lógica en Unity. 🎮
+
+![ejercicio 4](ejercicio4.gif)
